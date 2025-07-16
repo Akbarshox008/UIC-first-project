@@ -15,7 +15,7 @@
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisis ultricies at eleifend proin.
           Congue nibh nulla malesuada ultricies nec quam
         </p>
-        <RouterLink to="/menyu">
+        <RouterLink to="/menuorder">
           <button
             class="mt-8 md:mt-20 px-8 py-4 md:px-8 md:py-4 rounded-full bg-[#FF8A00] text-white text-[17px] md:text-[20px] font-semibold border-none cursor-pointer transition-all duration-500 hover:scale-105 hover:bg-[#fb3802] active:scale-100 w-full md:w-max"
           >

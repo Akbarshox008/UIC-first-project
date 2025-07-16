@@ -20,11 +20,6 @@ const routes = [
     component: () => import('../views/AboutView.vue'),
   },
   {
-    path: '/menyu',
-    name: 'menyu',
-    component: () => import('../views/MenyuView.vue'),
-  },
-  {
     path: '/order',
     name: 'order',
     component: () => import('/src/views/OrderView.vue'),

@@ -31,9 +31,9 @@
           <h2 class="text-[#ff8a00] text-lg font-bold">Page</h2>
           <div class="flex flex-col gap-4 text-white">
             <RouterLink to="/" class="hover:text-[#ff8a00] transition">Home</RouterLink>
-            <RouterLink to="/menyu" class="hover:text-[#ff8a00] transition">Menu</RouterLink>
-            <RouterLink to="/order" class="hover:text-[#ff8a00] transition">Order Online</RouterLink>
-            <RouterLink to="/menyu" class="hover:text-[#ff8a00] transition">Catering</RouterLink>
+            <RouterLink to="/menuorder" class="hover:text-[#ff8a00] transition">Menu</RouterLink>
+            <RouterLink to="/menuorder" class="hover:text-[#ff8a00] transition">Order Online</RouterLink>
+            <RouterLink to="/menuorder" class="hover:text-[#ff8a00] transition">Catering</RouterLink>
             <RouterLink to="/reservation" class="hover:text-[#ff8a00] transition">Reservation</RouterLink>
           </div>
         </div>
