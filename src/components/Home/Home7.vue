@@ -1,97 +1,57 @@
 <template>
-    <div class='container'>
-        <div class="home7-home">
-            <div class="home7">
-                <h1>we are open from</h1>
-                <article class="texts">
-                    <h2>Monday-Sunday</h2>
-                    <h4>Launch : Mon-Sun : 11:00am-02:00pm</h4>
-                    <h4>Dinner : sunday : 04:00pm-08:00pm</h4>
-                    <h4 class="h4-last">04:00pm-09:00pm</h4>
-                </article>
-                <article class="buttonss">
-                    <button :class="{ Active: actives === 0 }" @click="setActive(0)" class="btn">Order now</button>
-                    <button :class="{ Active: actives === 1 }" @click="setActive(1)" class="btn">Reservation</button>
-                </article>
-            </div>
-        </div>
+  <section class="w-full py-16 md:py-24 flex justify-center items-center text-white">
+    <div
+      class="w-full max-w-7xl h-[70vh] sm:h-[60vh] md:h-[50vh] rounded-[40px] sm:rounded-[60px] md:rounded-[120px] bg-cover bg-center flex flex-col items-center justify-center px-4 text-center"
+      style="background-image: url('/src/assets/icons/Background.png');">
+      
+      <!-- Title -->
+      <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[60px] font-bold mb-6 md:mb-8">
+        we are open from
+      </h1>
+
+      <!-- Texts -->
+      <div class="space-y-2 sm:space-y-3 md:space-y-4">
+        <h2 class="text-xl sm:text-2xl md:text-3xl">Monday-Sunday</h2>
+        <h4 class="text-sm sm:text-base md:text-lg">Launch : Mon-Sun : 11:00am-02:00pm</h4>
+        <h4 class="text-sm sm:text-base md:text-lg">Dinner : Sunday : 04:00pm-08:00pm</h4>
+        <h4 class="text-sm sm:text-base md:text-lg md:ml-36">04:00pm-09:00pm</h4>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8 md:mt-12">
+        <RouterLink to="/menuorder">
+          <button
+            @click="setActive(0)"
+            :class="[
+              'px-6 py-3 sm:px-8 sm:py-3 md:px-10 md:py-4 rounded-full font-semibold text-base sm:text-lg transition-all cursor-pointer',
+              actives === 0 ? 'bg-orange-600 text-white' : 'bg-white text-black hover:bg-orange-100'
+            ]">
+            Order now
+          </button>
+        </RouterLink>
+
+        <RouterLink to="/reservation">
+          <button
+            @click="setActive(1)"
+            :class="[
+              'px-6 py-3 sm:px-8 sm:py-3 md:px-10 md:py-4 rounded-full font-semibold text-base sm:text-lg transition-all cursor-pointer',
+              actives === 1 ? 'bg-orange-600 text-white' : 'bg-white text-black hover:bg-orange-100'
+            ]">
+            Reservation
+          </button>
+        </RouterLink>
+      </div>
     </div>
+  </section>
 </template>
+
 <script setup>
 import { ref } from 'vue';
+import { RouterLink } from 'vue-router';
 
 const actives = ref(0);
 
 function setActive(index) {
-    actives.value = index;
+  actives.value = index;
 }
 </script>
-<style scoped>
-.home7-home {
-    width: 100%;
-    height: 130vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    margin: auto;
-    .home7 {
-        background-image: url(/src/assets/icons/Background.png);
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 99vh;
-        width: 100%;
-        border-radius: 119px;
-        h1 {
-            font-size: 60px;
-            text-align: center;
-            padding-top: 140px;
-        }
-        .texts {
-            text-align: center;
-            h2 {
-                text-align: center;
-                font-size: 40px;
-                margin: 15px 0px;
-            }
-            h4 {
-                font-size: 18px;
-                line-height: 30px;
-                font-weight: 400;
-                &:nth-child(3) {
-                    font-size: 19px;
-                }
-            }
-            .h4-last {
-                margin-left: 144px;
-            }
-        }
-        .buttonss {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding-top: 80px;
-            gap: 20px;
-            .btn {
-                padding: 10px 40px;
-                border-radius: 30px;
-                background: #fff;
-                font-size: 19px;
-                font-weight: 600;
-                cursor: pointer;
-                border: none;
-
-                &:active {
-                    transform: scale(.95);
-                    transition: .4s;
-                }
-            }
-            .btn.Active {
-                background: orangered;
-                color: #fff;
-                transition: .5s;
-            }
-        }
-    }
-}
-</style>

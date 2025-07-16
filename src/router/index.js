@@ -55,10 +55,15 @@ const routes = [
     component: () => import('../components/Order/OrderMenyu.vue'),
   },
   {
-    path: '/',
+    path: '/signup',
     name: 'sign-up',
     component: () => import('../components/SignUp/SignUp.vue'),
   },
+  {
+    path: '/user',
+    name: 'User',
+    component: () => import('../components/User/User.vue')
+  }
 ];
 
 const router = createRouter({
@@ -72,7 +77,7 @@ router.beforeEach((to, from, next) => {
       next({ name: 'sign-up' });
     } else {
       next(
-       { name:'home'}
+        { name: 'home' }
       );
     }
   } else {

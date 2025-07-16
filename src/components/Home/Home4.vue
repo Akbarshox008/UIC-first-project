@@ -1,106 +1,28 @@
 <template>
-    <div class="home4">
-        <div class="container">
-            <div class="hom">
-                <div class="home4-box1">
-                    <img class="hom-img" src="/src/assets/icons/Picture (1).png" alt="">
-                    <img class="hom-img-child" src="/src/assets/icons/Picture (3).png" alt="">
-                    <img class="hom-img-chil2" src="/src/assets/icons/Picture (2).png" alt="">
-                </div>
-                <div class="home4-box2">
-                    <h1>Let's reserve <span>a table</span></h1>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisis ultricies at eleifend proin.
-                        Congue nibh nulla malesuada ultricies nec quam
-                    </p>
-                    <button class="btn">
-                        Reservation
-                    </button>
-                </div>
-            </div>
-        </div>
+  <section class="w-full flex flex-col lg:flex-row justify-between min-h-[110vh] bg-[#FFF4E7] mb-24">
+    <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center gap-16 md:gap-36 pt-24 px-4">
+      <!-- Images -->
+      <div class="relative w-full lg:w-1/3 flex justify-center mb-10 lg:mb-0">
+        <img src="/src/assets/icons/Picture (1).png" alt="" class="h-[60vh] sm:h-[70vh] object-contain" />
+        <img src="/src/assets/icons/Picture (2).png" alt="" class="absolute top-0 -right-6 sm:-right-10 w-[26%]" />
+        <img src="/src/assets/icons/Picture (3).png" alt="" class="absolute bottom-[-25px] sm:bottom-[-45px] w-[26%]" />
+      </div>
+
+      <!-- Text Content -->
+      <div class="w-full lg:w-2/3 relative lg:left-40 text-center lg:text-left">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.2] w-full lg:w-[50%] mx-auto lg:mx-0 mb-6">
+          Let's reserve <span class="text-[#FF8A00]">a table</span>
+        </h1>
+        <p class="text-base sm:text-lg leading-7 sm:leading-8 w-full lg:w-[53%] mx-auto lg:mx-0 mb-10">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facilisis ultricies at eleifend proin.
+          Congue nibh nulla malesuada ultricies nec quam.
+        </p>
+        <button
+          class="px-8 py-3 rounded-full bg-[#FF8A00] text-white text-base sm:text-lg font-semibold transition-all hover:scale-105 hover:shadow-lg hover:bg-orange-600 active:scale-100 active:shadow-none"
+        >
+          Reservation
+        </button>
+      </div>
     </div>
+  </section>
 </template>
-<script setup>
-
-</script>
-<style scoped>
-.home4 {
-    width: 100%;
-    height: 110vh;
-    background: #FFF4E7;
-    margin-bottom: 100px;
-
-    .hom {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        align-items: center;
-        gap: 150px;
-        .home4-box1 {
-            position: relative;
-            display: flex;
-            align-items: center;
-            top: 100px;
-            width: 35%;
-
-            .hom-img {
-                height: 90vh;
-            }
-
-            .hom-img-chil2 {
-                position: absolute;
-                width: 26%;
-                top: 1px;
-                right: -40px
-            }
-
-            .hom-img-child {
-                position: absolute;
-                bottom: -45px;
-                width: 26%;
-            }
-        }
-        .home4-box2{
-            width: 60%;
-            margin-left: 20px;
-            margin-top: 200px;
-            h1{
-                width:50%;
-                line-height: 88px;
-                font-size: 60px;
-                span{
-                    color: #FF8A00;
-                }
-            }
-            p{
-                font-size: 20px;
-                width: 53%;
-                line-height: 30px;
-                margin-bottom: 40px;
-            }
-            .btn{
-                padding: 10px 30px;
-                border-radius: 30px;
-                background: #FF8A00;
-                color: #fff;
-                font-size: 20px;
-                border: none;
-                cursor: pointer;
-                &:hover{
-                transition: .5s;
-                transform: scale(1.031);
-                box-shadow: 1px 10px 10px rgba(0, 0, 0, 0.15);
-                background: orangered;
-                }
-                &:active{
-                    transform: scale(1);
-                    box-shadow: none;
-                    transition: .3s;
-                }
-            }
-        }
-    }
-
-}
-</style>

@@ -1,65 +1,85 @@
 <template>
-  <div class="container">
-    <div class="box">
-      <h1>Our popular menu</h1>
-      <ul>
-        <li @click="selectCategory(1)" :class="{ active: currentPage === 1 }">
-          All category
-        </li>
-        <li @click="selectCategory(2)" :class="{ active: currentPage === 2 }">
-          Dinner
-        </li>
-        <li @click="selectCategory(3)" :class="{ active: currentPage === 3 }">
-          Lunch
-        </li>
-        <li @click="selectCategory(4)" :class="{ active: currentPage === 4 }">
-          Dessert
-        </li>
-        <li @click="selectCategory(5)" :class="{ active: currentPage === 5 }">
-          Drink
+  <section class="w-full py-16">
+    <div class="container mx-auto px-4">
+      <!-- Sarlavha -->
+      <h1 class="text-3xl sm:text-4xl md:text-[70px] leading-tight md:leading-[88px] text-center font-bold mb-12">
+        Our popular menu
+      </h1>
+
+      <!-- Kategoriya tugmalari -->
+      <ul class="flex flex-wrap items-center justify-center gap-4 mb-12 select-none">
+        <li v-for="cat in categories" :key="cat.id" @click="selectCategory(cat.id)" :class="[
+          'cursor-pointer px-4 sm:px-6 py-2 rounded-full font-semibold text-base sm:text-lg transition duration-300',
+          currentPage === cat.id
+            ? 'bg-[#311f09] text-white'
+            : 'bg-gray-300 hover:bg-[#311f09] hover:text-white hover:scale-105'
+        ]">
+          {{ cat.name }}
         </li>
       </ul>
-    </div>
-    <div class="Menyu">
-      <div
-        v-for="(item, index) in paginatedItems"
-        :key="index"
-        class="menu-item"
-      >
-        <img :src="item.image" :alt="item.name" class="item-images" />
-        <h2>{{ item.name }}</h2>
-        <div class="rating">
-          <span
-            v-for="star in 5"
-            :key="star"
-            @click="setRating(item, star)"
-            :class="{ active: star <= item.rating }"
-            >&#9733;</span
-          >
-        </div>
-        <p>{{ item.description }}</p>
-        <div class="price-order">
-          <span class="price">{{ item.price }}</span>
-          <button class="order-btn">Order now</button>
+
+      <!-- Menu grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-10 sm:gap-y-14 gap-x-6 sm:gap-x-8">
+        <div v-for="(item, index) in paginatedItems" :key="index"
+          class="bg-white rounded-lg shadow-md p-5 text-center flex flex-col items-center w-full">
+          <img :src="item.image" :alt="item.name"
+            class="w-[220px] sm:w-[240px] h-[220px] sm:h-[240px] rounded-lg object-cover mb-4" />
+          <h2 class="text-lg sm:text-xl font-bold mb-2">{{ item.name }}</h2>
+
+          <!-- Rating yulduzlari -->
+          <div class="flex justify-center mb-3">
+            <span v-for="star in 5" :key="star" @click="setRating(item, star)" :class="[
+              'text-xl sm:text-2xl cursor-pointer transition-colors duration-300',
+              star <= item.rating ? 'text-yellow-400' : 'text-gray-400'
+            ]">
+              &#9733;
+            </span>
+          </div>
+
+          <p class="text-sm text-gray-600 mb-4">{{ item.description }}</p>
+
+          <!-- Narx va Order -->
+          <div class="flex flex-col sm:flex-row justify-between items-center w-full gap-3 sm:gap-0">
+            <span class="text-lg font-bold">{{ item.price }}</span>
+            <button
+              class="bg-[#FF7F27] hover:bg-[#e67e22] text-white px-5 py-2 rounded-full transition duration-300 w-full sm:w-auto">
+              Order now
+            </button>
+          </div>
         </div>
       </div>
+
+      <!-- Pagination -->
+      <div class="flex flex-wrap justify-center gap-4 mt-12">
+        <button @click="prevPage" :disabled="currentPage === 1"
+          class="bg-[#311f09] disabled:bg-gray-400 text-white px-5 py-2 rounded-md transition hover:bg-[#e67e22] disabled:cursor-not-allowed w-[130px]">
+          Previous
+        </button>
+        <button @click="nextPage" :disabled="currentPage === totalPages"
+          class="bg-[#311f09] disabled:bg-gray-400 text-white px-5 py-2 rounded-md transition hover:bg-[#e67e22] disabled:cursor-not-allowed w-[130px]">
+          Next
+        </button>
+      </div>
     </div>
-    <div class="pagination">
-      <button @click="prevPage" :disabled="currentPage === 1">Previous</button>
-      <button @click="nextPage" :disabled="currentPage === totalPages">
-        Next
-      </button>
-    </div>
-  </div>
+  </section>
+
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
 
-const items = ref([]);
 const currentPage = ref(1);
 const itemsPerPage = 6;
 
+const categories = [
+  { id: 1, name: "All category" },
+  { id: 2, name: "Dinner" },
+  { id: 3, name: "Lunch" },
+  { id: 4, name: "Dessert" },
+  { id: 5, name: "Drink" },
+];
+
+const items = ref([]);
 const jsonData = [
   {
     name: "Margherita Pizza",
@@ -317,32 +337,22 @@ const jsonData = [
 ];
 
 const setRating = (item, value) => {
-  item.rating = value; // Update rating directly on the item object
+  item.rating = value;
 };
 
 const paginatedItems = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  return items.value.slice(start, end);
+  return items.value.slice(start, start + itemsPerPage);
 });
 
-const totalPages = computed(() => {
-  return Math.ceil(items.value.length / itemsPerPage);
-});
+const totalPages = computed(() => Math.ceil(items.value.length / itemsPerPage));
 
 const prevPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value--;
-    if (currentPage.value === 1) {
-      selectCategory(1); // Select the first category when going back to page 1
-    }
-  }
+  if (currentPage.value > 1) currentPage.value--;
 };
 
 const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value++;
-  }
+  if (currentPage.value < totalPages.value) currentPage.value++;
 };
 
 const selectCategory = (page) => {
@@ -353,159 +363,3 @@ onMounted(() => {
   items.value = jsonData;
 });
 </script>
-
-<style scoped>
-h1 {
-  font-size: 70px;
-  line-height: 88px;
-  margin: 60px 0px;
-  text-align: center;
-}
-
-.box {
-  ul {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    list-style: none;
-    margin-bottom: 50px;
-    margin-top: 30px;
-    user-select: none;
-
-
-    li {
-      cursor: pointer;
-      padding: 10px 30px;
-      border-radius: 30px;
-      font-size: 20px;
-      font-weight: 600;
-      transition: 0.9s;
-    }
-    li {
-      background: rgb(194, 186, 186);
-    }
-
-    li:first-child {
-      background: #311f09;
-      color: #fff;
-    }
-
-    li:hover {
-      background: #311f09;
-      color: #dfff;
-      transform: scale(1.07);
-    }
-
-    li:active {
-      transform: scale(1);
-    }
-
-    .active {
-      background-color: #311f09;
-      color: #fff;
-    }
-  }
-}
-
-.menu-item {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(1, 1, 1, 0.15);
-  padding: 20px;
-  text-align: center;
-  max-width: 300px;
-  margin: auto;
-}
-
-.item-images {
-  width: 260px;
-  height: 260px;
-  border-radius: 8px;
-}
-
-h2 {
-  margin: 20px 0 10px;
-}
-
-.rating {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-.rating span {
-  font-size: 24px;
-  cursor: pointer;
-  color: #ccc;
-  transition: color 0.3s;
-}
-
-.rating span.active {
-  color: #f39c12;
-}
-
-p {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 20px;
-}
-
-.price-order {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.price {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.order-btn {
-  background: #ff7f27;
-  border: none;
-  padding: 10px 30px;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  transition: background 0.3s;
-  border-radius: 20px;
-}
-
-.order-btn:hover {
-  background: #e67e22;
-}
-
-.Menyu {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  gap: 80px 50px;
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 40px;
-  margin-bottom: 100px;
-}
-
-.pagination button {
-  background: #311f09;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-  margin: 0 10px;
-}
-
-.pagination button:hover {
-  background: #e67e22;
-}
-
-.pagination button:disabled {
-  background: #beb9b9;
-  cursor: not-allowed;
-}
-</style>

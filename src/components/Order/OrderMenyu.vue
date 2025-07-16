@@ -1,70 +1,47 @@
 <template>
-    <div class="menu">
-      <h1>Menu</h1>
-      <ul class="menu-list">
-        <li v-for="(item, index) in menuItems" :key="index" class="menu-item">
-            <article>
-            <img :src="item.image" alt="">
-            </article>
-          {{ item.name }} - ${{ item.price }}
-          <button @click="addToCart(item)">Add to Cart</button>
+  <section class="w-full py-24">
+    <div class="container mx-auto px-4">
+      <!-- Title -->
+      <h1 class="text-4xl md:text-5xl font-bold text-center mb-12">Menu</h1>
+
+      <!-- Menu List -->
+      <ul class="flex flex-col gap-6">
+        <li 
+          v-for="(item, index) in menuItems" 
+          :key="item.id"
+          class="flex flex-col md:flex-row items-center md:justify-between gap-4 p-4 bg-gray-50 border border-gray-200 rounded-lg shadow-sm"
+        >
+          <div class="flex items-center gap-4">
+            <img :src="item.image" alt="Menu Item" class="w-20 h-20 object-cover rounded-lg"/>
+            <span class="text-lg font-semibold">{{ item.name }} - ${{ item.price }}</span>
+          </div>
+          <button
+            @click="handleAdd(item)"
+            class="px-5 py-2 bg-blue-600 text-white rounded-full font-medium transition hover:bg-blue-700 active:scale-95"
+          >
+            Add to Cart
+          </button>
         </li>
       </ul>
+
+      <!-- Cart -->
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue';
-  import { useCart } from './store.js';
-  import menuItemsData from '/src/MenyuItems.json';
-  
-  const menuItems = ref([]);
-  
-  onMounted(() => {
-    menuItems.value = menuItemsData;
-  });
-  
-  const { addToCart } = useCart();
-  </script>
-  
-  <style scoped>
-  .menu {
-    padding: 20px;
-    padding-top: 100px;
-  }
-  
-  .menu h1 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .menu-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .menu-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .menu-item button {
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .menu-item button:hover {
-    background-color: #0056b3;
-  }
-  </style>
-  
+  </section>
+</template>
+
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useCart } from '@/components/Order/store.js';
+import menuItemsData from '/src/MenyuItems.json';
+
+const menuItems = ref([]);
+const { addToCart, cartItems } = useCart();
+
+onMounted(() => {
+  menuItems.value = menuItemsData;
+});
+
+function handleAdd(item) {
+  addToCart(item);
+}
+</script>

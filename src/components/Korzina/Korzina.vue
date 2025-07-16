@@ -1,107 +1,60 @@
 <template>
-    <div class="shopping-cart">
-      <h1>Shopping Cart</h1>
-      <ul class="cart-list">
-        <li v-for="(item, index) in cartItems" :key="index" class="cart-item">
-            <article>
-                <img :src="item.image" alt="">
-                <article class="rating">
-                    <span
-                  v-for="star in 5"
-                  :key="star"
-                  @click="setRating(item, star)"
-                  :class="{ active: star <= item.rating }"
-                  >&#9733;</span>
-                </article>
-            </article>
-            {{ item.description }}
-          {{ item.name }} - ${{ item.price }}
-          <button @click="removeFromCart(index)" class="remove-button">Remove</button>
-        </li>
-      </ul>
-      <div v-if="cartItems.length === 0" class="empty-cart">Your cart is empty</div>
+  <section class="container mx-auto px-4 ">
+    <h1 class="text-3xl md:text-4xl font-bold mb-8 text-center pt-30">Shopping Cart</h1>
+
+    <ul v-if="cartItems.length" class="flex flex-col gap-4">
+      <li
+        v-for="(item, index) in cartItems"
+        :key="item.id"
+        class="flex flex-col md:flex-row items-center justify-between gap-4 p-4 border rounded-lg shadow-sm bg-white"
+      >
+        <!-- Product Info -->
+        <div class="flex items-center gap-4 w-full md:w-auto">
+          <img :src="item.image" alt="" class="w-20 h-20 object-cover rounded" />
+
+          <div>
+            <h2 class="text-lg font-semibold">{{ item.name }}</h2>
+            <p class="text-gray-600 text-sm mb-2">{{ item.description }}</p>
+            <p class="text-gray-800 font-medium">$ {{ item.price }}</p>
+            <p class="text-gray-800 font-medium">Quantity: {{ item.count }}</p>
+          </div>
+        </div>
+
+        <!-- Rating -->
+        <div class="flex flex-col items-center gap-2">
+          <div class="flex">
+            <span
+              v-for="star in 5"
+              :key="star"
+              @click="setRating(item, star)"
+              class="text-2xl cursor-pointer transition-colors"
+              :class="star <= item.rating ? 'text-yellow-400' : 'text-gray-300'"
+            >
+              ★
+            </span>
+          </div>
+          <button
+            @click="removeFromCart(index)"
+            class="px-4 py-2 bg-red-600 text-white rounded-full text-sm hover:bg-red-700 active:scale-95 transition"
+          >
+            Remove
+          </button>
+        </div>
+      </li>
+    </ul>
+
+    <div v-else class="text-center text-gray-500 text-lg mt-8">
+      Your cart is empty.
     </div>
-  </template>
-  
-  <script setup>
-  import { useCart } from '../Order/store.js';
-  
-  const { cartItems, removeFromCart } = useCart();
-  const setRating = (item, value) => {
-  item.rating = value; 
+  </section>
+</template>
+
+<script setup>
+import { useCart } from '@/components/Order/store.js';
+
+const { cartItems, removeFromCart } = useCart();
+
+const setRating = (item, value) => {
+  item.rating = value;
 };
-
-  </script>
-  
-  
-  
-  
-  <style scoped>
-
-  
-.rating {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
-
-  .rating span {
-    font-size: 24px;
-    cursor: pointer;
-    color: #ccc;
-    transition: color 0.3s;
-  }
-
-  .rating span.active {
-    color: #f39c12;
-  }
-  img{
-    width: 50px;
-  }
-  .shopping-cart {
-    padding: 20px;
-    text-align: center;
-    padding-top: 100px;
-  }
-  
-  .shopping-cart h1 {
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .cart-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .cart-item {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 10px;
-    margin: 10px 0;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    width: 50%;
-  }
-  
-  .cart-item button {
-    padding: 5px 10px;
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .cart-item button:hover {
-    background-color: #c82333;
-  }
-  
-  .empty-cart {
-    margin-top: 20px;
-    color: #999;
-  }
-  </style>
-  
+</script>

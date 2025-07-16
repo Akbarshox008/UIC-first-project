@@ -1,3 +1,6 @@
+@import "tailwindcss";
+
+/* 
 *{
     margin: 0;
     padding: 0;
@@ -11,7 +14,6 @@ body{
     height: max-content;
     margin: auto;
     padding: 0;
-    /* background: #000; */
 }
 html{
     font-size: 82.5%;
@@ -29,4 +31,4 @@ html::-webkit-scrollbar-thumb{
   background: #f82403;
   cursor: grab;
   border-radius: 10px;
-}
+} */
